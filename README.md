@@ -140,7 +140,6 @@ acesse `http://localhost:8080/h2-console` para visualizar o banco.
 
 ## Decisões de projeto
 
-- **Exclusão real:** ao excluir uma tarefa, o registro é removido do banco (sem exclusão lógica), por ser uma ferramenta de uso pessoal.
 - **H2 por enquanto:** o foco inicial é o Spring; a parte de infraestrutura na AWS fica para depois.
 - **DTOs separados da entidade:** a entidade não é exposta diretamente pela API.
 
