@@ -30,4 +30,11 @@ public class TarefaRepository {
         tarefaEncontrada.ifPresent(tarefas::remove);
         return tarefaEncontrada.isPresent();
     }
+
+    public Tarefa buscarPorId(int id) {
+        Optional<Tarefa> tarefaRepository = tarefaRepository.findById(id);
+
+        tarefaEncontrada.(tarefas::getFirst());
+        return tarefaEncontrada.isPresent();
+    }
 }

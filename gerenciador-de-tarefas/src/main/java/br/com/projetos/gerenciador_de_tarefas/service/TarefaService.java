@@ -31,6 +31,10 @@ public class TarefaService {
                 .toList();
     }
 
+    public List<TarefaResponseDTO> buscarPorId(int id) {
+        return tarefaRepository.buscarPorId(id);
+    }
+
 
 
     public boolean excluir(int id) {

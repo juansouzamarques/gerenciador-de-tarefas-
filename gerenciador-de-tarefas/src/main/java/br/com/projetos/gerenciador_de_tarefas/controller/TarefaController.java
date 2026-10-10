@@ -37,9 +37,12 @@ public class TarefaController {
         return ResponseEntity.ok(tarefaService.listarTodas());
     }
 
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<List<TarefaResponseDTO>> buscarPorId() {
+        return ResponseEntity.ok(tarefaService.buscarPorId(id));
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Void> excluir(@PathVariable int id) {
         boolean tarefaExcluida = tarefaService.excluir(id);
 
