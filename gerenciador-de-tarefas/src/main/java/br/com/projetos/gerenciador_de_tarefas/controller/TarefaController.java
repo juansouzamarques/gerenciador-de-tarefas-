@@ -3,7 +3,9 @@ package br.com.projetos.gerenciador_de_tarefas.controller;
 
 import br.com.projetos.gerenciador_de_tarefas.dto.TarefaRequestDTO;
 import br.com.projetos.gerenciador_de_tarefas.dto.TarefaResponseDTO;
+import br.com.projetos.gerenciador_de_tarefas.repository.TarefaRepository;
 import br.com.projetos.gerenciador_de_tarefas.service.TarefaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,10 +22,14 @@ import java.util.List;
 @RequestMapping("/tarefas")
 public class TarefaController {
 
-    private final TarefaService tarefaService;
 
-    public TarefaController(TarefaService tarefaService) {
+
+    private final TarefaService tarefaService;
+    private final TarefaRepository tarefaRepository;
+
+    public TarefaController(TarefaService tarefaService, TarefaRepository tarefaRepository) {
         this.tarefaService = tarefaService;
+        this.tarefaRepository = tarefaRepository;
     }
 
     @PostMapping("/cadastrar")
@@ -38,19 +44,24 @@ public class TarefaController {
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<List<TarefaResponseDTO>> buscarPorId() {
+    public ResponseEntity<List<TarefaResponseDTO>> buscarPorId(@PathVariable int id) {
         return ResponseEntity.ok(tarefaService.buscarPorId(id));
+    }
+
+
 
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Void> excluir(@PathVariable int id) {
-        boolean tarefaExcluida = tarefaService.excluir(id);
-
-        if (!tarefaExcluida) {
+    public ResponseEntity<Void> excluirFisicamente(@PathVariable Long id) {
+        // Verifica se o registro realmente existe antes de tentar deletar
+        if (!tarefaRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
 
+        // Executa a exclusão física direto no banco de dados
+        tarefaRepository.deleteById(id);
+
+        // Retorna o status 204 No Content (sucesso, sem corpo na resposta)
         return ResponseEntity.noContent().build();
     }
-
 }
