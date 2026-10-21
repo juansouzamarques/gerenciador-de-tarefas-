@@ -114,7 +114,7 @@ acesse `http://localhost:8080/h2-console` para visualizar o banco.
 
 ### Em andamento
 - [x] Estrutura inicial do projeto (pastas `controller` e `service`)
-- [ ] Entidade `Tarefa` e enums `Status` e `Prioridade`
+- [x] Entidade `Tarefa` e enums `Status` e `Prioridade`
 - [ ] `TarefaRepository`
 - [ ] DTOs e `TarefaMapper`
 - [ ] `TarefaService` com as regras de negócio
