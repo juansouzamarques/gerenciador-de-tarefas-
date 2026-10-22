@@ -8,6 +8,7 @@ import br.com.projetos.gerenciador_de_tarefas.repository.TarefaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TarefaService {
@@ -20,24 +21,28 @@ public class TarefaService {
 
     public TarefaResponseDTO cadastrar(TarefaRequestDTO requestDTO) {
         Tarefa tarefa = tarefaMapper.toModel(requestDTO);
-        Tarefa tarefaSalva = tarefaRepository.salvar(tarefa);
+        Tarefa tarefaSalva = tarefaRepository.save(tarefa);
         return tarefaMapper.toResponseDTO(tarefaSalva);
     }
 
     public List<TarefaResponseDTO> listarTodas() {
-        return tarefaRepository.listarTodas()
+        return tarefaRepository.findAll()
                 .stream()
                 .map(tarefaMapper::toResponseDTO)
                 .toList();
     }
 
-    public List<TarefaResponseDTO> buscarPorId(int id) {
-        return tarefaRepository.buscarPorId(id);
+    public Optional<TarefaResponseDTO> buscarPorId(int id) {
+        return tarefaRepository.findById(id).map(tarefaMapper::toResponseDTO);
     }
-
 
 
     public boolean excluir(int id) {
-        return tarefaRepository.excluirPorId(id);
+        if (!tarefaRepository.existsById(id)) {
+            return false;
+        }
+        tarefaRepository.deleteById(id);
+        return true;
     }
+
 }
