@@ -11,22 +11,22 @@ public class TarefaMapper {
 
     public Tarefa toModel(TarefaRequestDTO requestDTO) {
         Tarefa tarefa = new Tarefa();
-        tarefa.setTitulo(requestDTO.getTitulo());
-        tarefa.setDescricao(requestDTO.getDescricao());
-        tarefa.setStatus(requestDTO.getStatus() != null ? requestDTO.getStatus() : Status.PENDENTE);
-        tarefa.setPrioridade(requestDTO.getPrioridade());
+        tarefa.setTitulo(requestDTO.titulo());
+        tarefa.setDescricao(requestDTO.descricao());
+        tarefa.setStatus(requestDTO.status() != null ? requestDTO.status() : Status.PENDENTE);
+        tarefa.setPrioridade(requestDTO.prioridade());
         tarefa.setDataCriacao(LocalDateTime.now());
         return tarefa;
     }
 
     public TarefaResponseDTO toResponseDTO(Tarefa tarefa) {
-        TarefaResponseDTO responseDTO = new TarefaResponseDTO();
-        responseDTO.setId(tarefa.getId());
-        responseDTO.setTitulo(tarefa.getTitulo());
-        responseDTO.setDescricao(tarefa.getDescricao());
-        responseDTO.setStatus(tarefa.getStatus());
-        responseDTO.setPrioridade(tarefa.getPrioridade());
-        responseDTO.setDataCriacao(tarefa.getDataCriacao());
-        return responseDTO;
+        return new TarefaResponseDTO(
+                tarefa.getId(),
+                tarefa.getTitulo(),
+                tarefa.getDescricao(),
+                tarefa.getStatus(),
+                tarefa.getPrioridade(),
+                tarefa.getDataCriacao()
+        );
     }
 }
